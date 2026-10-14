@@ -12,12 +12,14 @@ window = pygame.display.set_mode((1000, 800))
 # Set color scheme variables using RGB values 
 PERIWINKLE = (161, 175, 241)
 PINK = (255, 179, 217)
+PURPLE = (180, 151, 231)
 
 # set the title of app using .set_caption 
 pygame.display.set_caption("Dollz!")
 
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()
+
 
 # load in and save base assets to variables using .image.load
 base_1 = pygame.image.load("assets/Bases/base_1.png").convert_alpha()
@@ -36,8 +38,10 @@ current_base = base_1
 current_eyes = eyes_brown
 
 # Create a character panelusing rect() method 
-# prob gonna add these tg 
-character_panel = pygame.Rect(50, 50, 900 , 700)
+panel = pygame.Rect(50, 50, 900 , 700)
+character_panel = pygame.Rect(50, 50, 400 , 700)
+inner_character_panel = pygame.Rect(75,75, 350 , 650)
+
 
 # RUNTIME LOOP 
 
@@ -59,12 +63,14 @@ while running:
     # Use the .fill function to set window color
     window.fill(PINK)
     #
-    pygame.draw.rect(window, PERIWINKLE, character_panel)
+    pygame.draw.rect(window, PERIWINKLE, panel)
+    pygame.draw.rect(window, PURPLE, character_panel)
+    pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
-    
+
     #
-    window.blit(current_base, (100,100))
-    window.blit(current_eyes, (100,100))
+    window.blit(current_base, (95,100))
+    window.blit(current_eyes, (95,100))
 
     # Update the full display surface to the screen
     pygame.display.flip()
