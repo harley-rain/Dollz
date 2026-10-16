@@ -2,6 +2,7 @@
 # 
 
 import pygame 
+from assets import load_assets 
 
 # initialize library (prepares to run app)
 pygame.init() 
@@ -21,21 +22,11 @@ pygame.display.set_caption("Dollz!")
 clock = pygame.time.Clock()
 
 
-# load in and save base assets to variables using .image.load
-base_1 = pygame.image.load("assets/Bases/base_1.png").convert_alpha()
-base_2 = pygame.image.load("assets/Bases/base_2.png").convert_alpha()
-base_3 = pygame.image.load("assets/Bases/base_3.png").convert_alpha()
+bases, eyes, hair = load_assets()
 
-# load in and save eye assets to variables using .image.load
-eyes_brown = pygame.image.load("assets/Eyes/eyes_brown.png").convert_alpha()
-eyes_blue = pygame.image.load("assets/Eyes/eyes_blue.png").convert_alpha()
-eyes_green = pygame.image.load("assets/Eyes/eyes_green.png").convert_alpha()
-eyes_purple = pygame.image.load("assets/Eyes/eyes_purple.png").convert_alpha()
-eyes_pink = pygame.image.load("assets/Eyes/eyes_pink.png").convert_alpha()
-
-# default base and eyes
-current_base = base_1
-current_eyes = eyes_brown
+current_base = bases["base_1"]
+current_eyes = eyes["pink"]
+current_hair = hair["pony"]["black"]
 
 # Create a character panelusing rect() method 
 panel = pygame.Rect(50, 50, 900 , 700)
@@ -67,13 +58,10 @@ while running:
     pygame.draw.rect(window, PURPLE, character_panel)
     pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
-
     #
     window.blit(current_base, (95,100))
     window.blit(current_eyes, (95,100))
+    window.blit(current_hair, (95,100))
 
     # Update the full display surface to the screen
     pygame.display.flip()
-    
-
-    
