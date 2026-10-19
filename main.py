@@ -2,7 +2,7 @@
 # 
 import pygame 
 # import function from asset file 
-from assets import load_assets 
+from assets import load_asset
 # import functions from customization panel 
 from customization import draw_customization, handle_customization_event
 
@@ -24,7 +24,7 @@ pygame.display.set_caption("Dollz!")
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()
 
-bases, eyes, hair = load_assets()
+load_asset(current_base) 
 
 current_base = bases["base_1"]
 current_eyes = eyes["blue"]
