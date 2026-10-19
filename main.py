@@ -67,9 +67,9 @@ while running:
     pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
     #
-    window.blit(current_base, (95,100))
-    window.blit(current_eyes, (95,100))
-    window.blit(current_hair, (95,100))
+    window.blit(current_base, (100,60))
+    window.blit(current_eyes, (100,60))
+    window.blit(current_hair, (100,60))
 
     draw_customization(window, selected_category)
 

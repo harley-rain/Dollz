@@ -26,7 +26,7 @@ def draw_customization(window, selected_category):
         "accessories": accessories_button
     }
 
-    my_font = pygame.font.SysFont("verdana", 36)
+    my_font = pygame.font.SysFont("verdana", 20)
 
     for category, button in buttons.items():
         if category == selected_category:
