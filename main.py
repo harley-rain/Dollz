@@ -1,11 +1,9 @@
-# Header******
-# 
+# Harley Coxon 
 import pygame 
 # import function from asset file 
 from assets import load_asset
 # import functions from customization panel 
 from customization import draw_customization, handle_customization_event
-
 
 # initialize library (prepares to run app)
 pygame.init() 
@@ -24,13 +22,13 @@ pygame.display.set_caption("Dollz!")
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()
 
-load_asset(current_base) 
+# load_asset() loads then returns selected asset 
+selected_base = load_asset("bases", "base_1")
+selected_eyes = load_asset("eyes", "brown")
+selected_hair = load_asset("hair", "short", "pink")
 
-current_base = bases["base_1"]
-current_eyes = eyes["blue"]
-current_hair = hair["short"]["black"]
 # highlighted button 
-selected_category = "eyes"
+selected_category = None
 
 # Create a character panelusing rect() method 
 panel = pygame.Rect(50, 50, 900 , 700)
@@ -67,9 +65,9 @@ while running:
     pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
     #
-    window.blit(current_base, (100,60))
-    window.blit(current_eyes, (100,60))
-    window.blit(current_hair, (100,60))
+    window.blit(selected_base, (100,60))
+    window.blit(selected_eyes, (100,60))
+    window.blit(selected_hair, (100,60))
 
     draw_customization(window, selected_category)
 

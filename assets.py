@@ -7,6 +7,7 @@ from pathlib import Path
 ASSET_PATH = Path("assets")
 
 @lru_cache(maxsize=None)
+
 def load_asset(category, name, color=None):
 
     if category == "bases":
