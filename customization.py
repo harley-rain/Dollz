@@ -9,11 +9,9 @@ PURPLE = (180, 151, 231)
 eyes_button = pygame.Rect(480, 100, 140, 60)
 hair_button = pygame.Rect(630, 100, 140, 60)
 tops_button = pygame.Rect(780, 100, 140, 60)
-
 bottoms_button = pygame.Rect(480, 170, 140, 60)
 shoes_button = pygame.Rect(630, 170, 140, 60)
 accessories_button = pygame.Rect(780, 170, 140, 60)
-
 
 def draw_customization(window, selected_category):
     # Draw category buttons
@@ -38,7 +36,6 @@ def draw_customization(window, selected_category):
 
         text = my_font.render(category.capitalize(), True, (255, 255, 255))
         window.blit(text, text.get_rect(center=button.center))
-
 
 def handle_customization_event(event, selected_category):
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

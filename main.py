@@ -24,8 +24,9 @@ clock = pygame.time.Clock()
 
 # load_asset() loads then returns selected asset 
 selected_base = load_asset("bases", "base_1")
-selected_eyes = load_asset("eyes", "brown")
-selected_hair = load_asset("hair", "short", "pink")
+selected_eyes = load_asset("eyes", "green")
+selected_hair = load_asset("hair", "short", "black")
+selected_bottoms = load_asset("Bottoms", "bottoms_2")
 
 # highlighted button 
 selected_category = None
@@ -35,12 +36,9 @@ panel = pygame.Rect(50, 50, 900 , 700)
 character_panel = pygame.Rect(50, 50, 400 , 700)
 inner_character_panel = pygame.Rect(75,75, 350 , 650)
 
-
 # RUNTIME LOOP 
-
 # running boolean variable 
 running = True; 
-
 # Main while loop to control application during run time 
 # while running == true
 while running: 
@@ -68,6 +66,8 @@ while running:
     window.blit(selected_base, (100,60))
     window.blit(selected_eyes, (100,60))
     window.blit(selected_hair, (100,60))
+    window.blit(selected_bottoms, (100,60))
+
 
     draw_customization(window, selected_category)
 

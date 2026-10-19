@@ -19,6 +19,9 @@ def load_asset(category, name, color=None):
     elif category == "hair":
         path = ASSET_PATH / "Hair" / f"{name}_{color}.png"
 
+    elif category == "Bottoms":
+        path = ASSET_PATH / "Bottoms" / f"{name}.png"
+
     else:
         raise ValueError(f"Unknown category: {category}")
 
