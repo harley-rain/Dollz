@@ -39,6 +39,7 @@ def draw_customization(window, selected_category):
 
 def handle_customization_event(event, selected_category):
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        # dictionary 
         buttons = {
             "eyes": eyes_button,
             "hair": hair_button,

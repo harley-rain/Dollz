@@ -26,7 +26,7 @@ clock = pygame.time.Clock()
 selected_base = load_asset("bases", "base_1")
 selected_eyes = load_asset("eyes", "green")
 selected_hair = load_asset("hair", "short", "black")
-selected_bottoms = load_asset("Bottoms", "bottoms_2")
+selected_bottoms = load_asset("Bottoms", "bottoms_3")
 
 # highlighted button 
 selected_category = None
@@ -57,18 +57,19 @@ while running:
     clock.tick(60) 
     # Use the .fill function to set window color
     window.fill(PINK)
-    #
+
+    # DRAW Panels
     pygame.draw.rect(window, PERIWINKLE, panel)
     pygame.draw.rect(window, PURPLE, character_panel)
     pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
-    #
+    # 
     window.blit(selected_base, (100,60))
     window.blit(selected_eyes, (100,60))
     window.blit(selected_hair, (100,60))
     window.blit(selected_bottoms, (100,60))
 
-
+    
     draw_customization(window, selected_category)
 
     # Update the full display surface to the screen
