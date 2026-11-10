@@ -1,5 +1,6 @@
 # Harley Coxon 
 import random
+from pathlib import Path
 import pygame 
 # import function from asset file 
 from assets import load_asset
@@ -16,14 +17,18 @@ pygame.init()
 
 # create a window(the surface that can be drawn on) and give it dimensions by calling .display.set_mode() 
 window = pygame.display.set_mode((1000, 800))
+pygame.display.set_caption("Dollz!")
 
 # Set color scheme variables using RGB values 
 PERIWINKLE = (161, 175, 241)
 PINK = (255, 179, 217)
 PURPLE = (180, 151, 231)
 
-# set the title of app using .set_caption 
-pygame.display.set_caption("Dollz!")
+# Show the logo before loading the character assets.
+logo = pygame.image.load(Path(__file__).resolve().parent / "logo.png").convert_alpha()
+window.fill(PINK)
+window.blit(logo, logo.get_rect(center=window.get_rect().center))
+pygame.display.flip()
 
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()

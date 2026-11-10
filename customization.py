@@ -31,8 +31,10 @@ ASSET_CHOICES = {
         ("Purple", ("eyes", "purple")),
     ],
     "tops": [
-        ("Top 1", ("Tops", "tops_1")),
-        ("Top 2", ("Tops", "tops_2")),
+        ("1", ("Tops", "tops_1")),
+        ("2", ("Tops", "tops_2")),
+        ("3", ("Tops", "tops_3")),
+        ("4", ("Tops", "tops_4")),
     ],
     "bottoms": [
         (f"Bottoms {number}", ("Bottoms", f"bottoms_{number}"))
@@ -65,7 +67,14 @@ HAIR_COLOR_X = 720
 HAIR_OPTIONS_Y = 300
 HAIR_OPTION_COLUMNS = 2
 REMOVE_ASSET = ("__remove__",)
-REMOVE_BUTTON = pygame.Rect(870, 240, 50, 28)
+
+
+def _remove_button(category):
+    """Place the remove button centered below this category's options."""
+    option_rects = [button for _label, _args, button in _asset_buttons(category)]
+    center_x = sum(button.centerx for button in option_rects) // len(option_rects)
+    y = max(button.bottom for button in option_rects) + ASSET_BUTTON_GAP_Y
+    return pygame.Rect(center_x - 25, y, 50, 28)
 
 
 def _asset_buttons(category):
@@ -136,9 +145,10 @@ def draw_customization(
             window.blit(text, text.get_rect(center=button.center))
     else:
         if selected_category in ("tops", "bottoms"):
-            pygame.draw.rect(window, PURPLE, REMOVE_BUTTON, border_radius=6)
+            remove_button = _remove_button(selected_category)
+            pygame.draw.rect(window, PURPLE, remove_button, border_radius=6)
             remove_text = font.render("X", True, WHITE)
-            window.blit(remove_text, remove_text.get_rect(center=REMOVE_BUTTON.center))
+            window.blit(remove_text, remove_text.get_rect(center=remove_button.center))
 
         # Draw asset buttons only for the currently selected category.
         selected_asset_args = (selected_asset_args or {}).get(selected_category)
@@ -178,7 +188,7 @@ def handle_customization_event(
 
     if (
         selected_category in ("tops", "bottoms")
-        and REMOVE_BUTTON.collidepoint(event.pos)
+        and _remove_button(selected_category).collidepoint(event.pos)
     ):
         return selected_category, REMOVE_ASSET, hair_style, hair_color
 
