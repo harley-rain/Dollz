@@ -1,9 +1,15 @@
 # Harley Coxon 
+import random
 import pygame 
 # import function from asset file 
 from assets import load_asset
 # import functions from customization panel 
-from customization import draw_customization, handle_customization_event
+from customization import (
+    ASSET_CHOICES,
+    REMOVE_ASSET,
+    draw_customization,
+    handle_customization_event,
+)
 
 # initialize library (prepares to run app)
 pygame.init() 
@@ -22,11 +28,22 @@ pygame.display.set_caption("Dollz!")
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()
 
-# load_asset() loads then returns selected asset 
-selected_base = load_asset("bases", "base_1")
-selected_eyes = load_asset("eyes", "green")
-selected_hair = load_asset("hair", "short", "black")
-selected_bottoms = load_asset("Bottoms", "bottoms_3")
+# Keep each selected asset's loader arguments so the matching option can be highlighted.
+selected_asset_args = {
+    "backgrounds": ("Backgrounds", "backgrounds_1"),
+    "eyes": random.choice(ASSET_CHOICES["eyes"])[1],
+    "hair": ("hair", "short", "black"),
+    "tops": None,
+    "bottoms": None,
+    "base": random.choice(ASSET_CHOICES["base"])[1],
+}
+selected_assets = {
+    category: load_asset(*asset_args) if asset_args is not None else None
+    for category, asset_args in selected_asset_args.items()
+}
+selected_hair_style = "short"
+selected_hair_color = "black"
+
 
 # highlighted button 
 selected_category = None
@@ -48,10 +65,21 @@ while running:
         if event.type == pygame.QUIT:
             # then stop running 
             running = False
-
-    # check for a click 
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        selected_category = handle_customization_event(event, selected_category)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            (
+                selected_category,
+                asset_args,
+                selected_hair_style,
+                selected_hair_color,
+            ) = handle_customization_event(
+                event, selected_category, selected_hair_style, selected_hair_color
+            )
+            if asset_args == REMOVE_ASSET:
+                selected_asset_args[selected_category] = None
+                selected_assets[selected_category] = None
+            elif asset_args is not None:
+                selected_asset_args[selected_category] = asset_args
+                selected_assets[selected_category] = load_asset(*asset_args)
     
     # set clock frame goal to control loop 
     clock.tick(60) 
@@ -63,14 +91,24 @@ while running:
     pygame.draw.rect(window, PURPLE, character_panel)
     pygame.draw.rect(window, PERIWINKLE, inner_character_panel)
 
-    # 
-    window.blit(selected_base, (100,60))
-    window.blit(selected_eyes, (100,60))
-    window.blit(selected_hair, (100,60))
-    window.blit(selected_bottoms, (100,60))
-
     
-    draw_customization(window, selected_category)
+    window.blit(selected_assets["backgrounds"], (0,0))
+    window.blit(selected_assets["base"], (100,100))
+    window.blit(selected_assets["eyes"], (100,100))
+    if selected_assets["bottoms"] is not None:
+        window.blit(selected_assets["bottoms"], (100,100))
+    if selected_assets["tops"] is not None:
+        window.blit(selected_assets["tops"], (100,100))
+    window.blit(selected_assets["hair"], (100,100))
+
+
+    draw_customization(
+        window,
+        selected_category,
+        selected_hair_style,
+        selected_hair_color,
+        selected_asset_args,
+    )
 
     # Update the full display surface to the screen
     pygame.display.flip()
