@@ -17,7 +17,7 @@ CATEGORY_BUTTONS = {
 }
 
 CATEGORY_LABELS = {
-    "base": "Skin Color",
+    "base": "Base Color",
 }
 
 # Each choice is (button label, arguments to pass to load_asset).
@@ -37,8 +37,10 @@ ASSET_CHOICES = {
         ("4", ("Tops", "tops_4")),
     ],
     "bottoms": [
-        (f"Bottoms {number}", ("Bottoms", f"bottoms_{number}"))
-        for number in range(1, 5)
+        ("1", ("Bottoms", "bottoms_1")),
+        ("2", ("Bottoms", "bottoms_2")),
+        ("3", ("Bottoms", "bottoms_3")),
+        ("4", ("Bottoms", "bottoms_4")),
     ],
     "backgrounds": [
         ("Pink", ("Backgrounds", "backgrounds_1")),
@@ -46,12 +48,16 @@ ASSET_CHOICES = {
         ("Green", ("Backgrounds", "backgrounds_3")),
     ],
     "base": [
-        (f"Skin {number}", ("bases", f"base_{number}"))
+        (f"Base {number}", ("bases", f"base_{number}"))
         for number in range(1, 4)
     ],
 }
 
 HAIR_STYLES = ("short", "straight", "curly", "pony", "spig", "cpig")
+HAIR_STYLE_LABELS = {
+    "spig": "Straight piggies",
+    "cpig": "Curly Piggies",
+}
 HAIR_COLORS = ("black", "blonde", "brown", "pink", "red")
 
 # Asset choices are laid out in a 4-column grid in the right-side panel.
@@ -108,7 +114,8 @@ def _hair_option_buttons():
             x = start_x + column * (ASSET_BUTTON_WIDTH + ASSET_BUTTON_GAP_X)
             y = HAIR_OPTIONS_Y + row * (ASSET_BUTTON_HEIGHT + ASSET_BUTTON_GAP_Y)
             rect = pygame.Rect(x, y, ASSET_BUTTON_WIDTH, ASSET_BUTTON_HEIGHT)
-            buttons.append((group, option, option.capitalize(), rect))
+            label = HAIR_STYLE_LABELS.get(option, option.capitalize())
+            buttons.append((group, option, label, rect))
 
     return buttons
 
@@ -141,7 +148,12 @@ def draw_customization(
         for group, value, label, button in _hair_option_buttons():
             color = PINK if selected_hair_options[group] == value else PURPLE
             pygame.draw.rect(window, color, button, border_radius=6)
-            text = small_font.render(label, True, WHITE)
+            label_font = (
+                pygame.font.SysFont("verdana", 11)
+                if group == "style" and value in HAIR_STYLE_LABELS
+                else small_font
+            )
+            text = label_font.render(label, True, WHITE)
             window.blit(text, text.get_rect(center=button.center))
     else:
         if selected_category in ("tops", "bottoms"):

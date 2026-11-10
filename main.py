@@ -1,4 +1,9 @@
 # Harley Coxon 
+# CMPS 4143 - Python/Java 
+# Python is awesome assignment 
+# Dollz! is a character desktop app that allows the user to customize a doll character 
+# Dollz! was created using Python and the Pygame library. 
+
 import random
 from pathlib import Path
 import pygame 
@@ -23,12 +28,17 @@ pygame.display.set_caption("Dollz!")
 PERIWINKLE = (161, 175, 241)
 PINK = (255, 179, 217)
 PURPLE = (180, 151, 231)
+WHITE = (255, 255, 255)
 
-# Show the logo before loading the character assets.
+# Keep the logo in the unused lower-right area of the customization panel.
 logo = pygame.image.load(Path(__file__).resolve().parent / "logo.png").convert_alpha()
-window.fill(PINK)
-window.blit(logo, logo.get_rect(center=window.get_rect().center))
-pygame.display.flip()
+logo = pygame.transform.smoothscale(logo, (180, 180))
+logo_card = pygame.Rect(560, 460, 290, 210)
+logo_caption_font = pygame.font.SysFont("verdana", 15)
+logo_credits = (
+    logo_caption_font.render("Created using python and pygame", True, PURPLE),
+    logo_caption_font.render("By Harley Coxon", True, PURPLE),
+)
 
 # create clock variable to limit the speed of every cycle of of running loop
 clock = pygame.time.Clock()
@@ -114,6 +124,12 @@ while running:
         selected_hair_color,
         selected_asset_args,
     )
+    pygame.draw.rect(window, WHITE, logo_card, border_radius=12)
+    pygame.draw.rect(window, PURPLE, logo_card, width=3, border_radius=12)
+    window.blit(logo, logo.get_rect(midtop=(logo_card.centerx, logo_card.top - 2)))
+    for index, credit in enumerate(logo_credits):
+        credit_y = logo_card.top + 160 + index * 22
+        window.blit(credit, credit.get_rect(center=(logo_card.centerx, credit_y)))
 
     # Update the full display surface to the screen
     pygame.display.flip()
